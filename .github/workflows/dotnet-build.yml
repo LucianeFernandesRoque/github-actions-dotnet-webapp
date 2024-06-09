@@ -1,0 +1,26 @@
+name: Luciane Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .Net
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1'
+
+    - name: Restore dependencies
+      run: dotnet restore "./github4women/github4women.csproj"
+    - name: Build
+      run: dotnet build --no-restore
